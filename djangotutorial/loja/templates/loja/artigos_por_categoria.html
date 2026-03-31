@@ -1,0 +1,38 @@
+{% extends 'loja/base.html' %}
+
+{% block content %}
+<div class="p-4 mb-5 bg-white rounded-3 shadow-sm border">
+    <div class="container-fluid py-2">
+        <h1 class="display-5 fw-bold text-primary">🏷️ {{ categoria.nome }}</h1>
+        <p class="col-md-8 fs-5 text-muted">{{ categoria.descricao }}</p>
+        <a href="{% url 'lista_artigos' %}" class="btn btn-secondary mt-2">⬅️ Voltar à Loja</a>
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for artigo in artigos %}
+    <div class="col">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h5 class="card-title fw-bold mb-0">{{ artigo.nome }}</h5>
+                    <span class="badge bg-success preco-badge">{{ artigo.preco }}€</span>
+                </div>
+                <p class="card-text text-secondary mt-3">{{ artigo.descricao }}</p>
+            </div>
+            <div class="card-footer bg-white border-top-0 pb-3 text-end">
+                <a href="{% url 'perfil_vendedor' artigo.vendedor.id %}" class="btn btn-sm btn-outline-secondary">
+                    Vendido por: <strong>{{ artigo.vendedor.nome }}</strong>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-warning shadow-sm" role="alert">
+            Ainda não há artigos registados nesta categoria.
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

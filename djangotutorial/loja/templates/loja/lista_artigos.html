@@ -1,0 +1,42 @@
+{% extends 'loja/base.html' %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h2 class="display-6 fw-bold">Todos os Artigos</h2>
+        <p class="text-muted">Descobre os melhores produtos aos melhores preços.</p>
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for artigo in artigos %}
+    <div class="col">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h5 class="card-title fw-bold mb-0">{{ artigo.nome }}</h5>
+                    <span class="badge bg-success preco-badge">{{ artigo.preco }}€</span>
+                </div>
+                <p class="card-text text-secondary mt-3">{{ artigo.descricao }}</p>
+            </div>
+            <div class="card-footer bg-white border-top-0 pb-3">
+                <div class="d-flex justify-content-between">
+                    <a href="{% url 'artigos_por_categoria' artigo.categoria.id %}" class="btn btn-sm btn-outline-primary">
+                        🏷️ {{ artigo.categoria.nome }}
+                    </a>
+                    <a href="{% url 'perfil_vendedor' artigo.vendedor.id %}" class="btn btn-sm btn-outline-secondary">
+                        🏪 {{ artigo.vendedor.nome }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-info shadow-sm" role="alert">
+            De momento, não existem artigos na loja.
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
